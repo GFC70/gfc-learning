@@ -1,0 +1,16 @@
+name: "gfc-learning"
+title: "Home"
+description: |
+  GFC Learning
+output_dir: "docs"
+theme: theme.css
+navbar:
+  right:
+    - text: "About"
+      href: about.html
+output: distill::distill_article
+collections:
+  posts:
+    categories: true
+    categories_metadata: true
+    authors_metadata: false

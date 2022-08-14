@@ -1,0 +1,20 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "About this blog",
+      "description": "Some additional details about me",
+      "author": [],
+      "contents": "\r\nOverview\r\nWorked in the IT industry for 24 years with experience in a\r\nmulti-vendor environment in physical and global virtual teams.\r\nUsing MS Office products, most recently the Power Query and Power\r\nPivot tools in MS Excel, to produce high quality views and analysis of\r\nlarge data sets.\r\nRecently learning the R programming language to analyse large data\r\nsets and to produce data visualisations\r\nMentoring and coaching colleagues, allowing them to move onto new\r\ncareer paths and positions\r\nAchievements\r\nUsing the R programming language to analysis over 4.5 million rows\r\nof data to identify blockages in processes\r\nProviding senior management with both an overview and detailed view\r\nof outstanding debt\r\nReducing a daily six hour task to less than 15 minutes per day by\r\nautomating email creation for new work requests\r\nReducing turn around times for client non-standard service requests\r\nfrom over 80 days to less than 10 working days\r\nSelf service tool for users to extract data and present in a variety\r\nof charting formats\r\nA tool to collate estimated prices for work in a consistent format\r\nand to supply summarised reports to clients; identifying stale sales\r\nopportunities worth over $12m\r\nManagement of a global Change Request process to monitor and\r\nimplement changes from project teams and clients\r\nTestimonials\r\n\r\n Adept at taking\r\nuser requirements (usually vague verbal/email requests) and responding\r\nwith astutely accurate deliverables. And he delivers quickly to boot\r\n - Former\r\nProject Manager\r\n\r\n\r\n You leave behind\r\na legacy you can be proud of and that will have a lasting impact on the\r\ncareers of all who learned from you.\r\n- Former Team\r\nLeader\r\n\r\n\r\n\r\nLinkedIn   |  \r\n\r\nGitHub\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+      "last_modified": "2022-08-14T16:20:15+01:00"
+    },
+    {
+      "path": "index.html",
+      "title": "GFC Learning",
+      "author": [],
+      "contents": "\r\n\r\n\r\n\r\n",
+      "last_modified": "2022-08-14T16:20:16+01:00"
+    }
+  ],
+  "collections": ["posts/posts.json"]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "path": "posts/2022-08-14-2022-08-14-pq-zoom/",
+    "title": "Zooming",
+    "description": "Zooming the Power Query Editor Window",
+    "author": [
+      {
+        "name": "Graham Cox",
+        "url": {}
+      }
+    ],
+    "date": "2022-08-14",
+    "categories": [
+      "Excel",
+      "Power Query",
+      "Tips and Tricks"
+    ],
+    "contents": "\r\nA tip that is often forgotten about is how to zoom in and out when\r\nusing the Power Query Editor. The text showing the data table can appear\r\nsmall to those with visual difficulties. Even for those without\r\ndifficulties, the size of the text can prove problematic at times.\r\nTo increase the size of the text shown in the editor window, use the\r\nkey combinations of\r\nCTRL SHIFT + to zoom in\r\nCTRL SHIFT - to zoom out\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+    "preview": "posts/2022-08-14-2022-08-14-pq-zoom/./zoom.gif",
+    "last_modified": "2022-08-14T16:19:56+01:00",
+    "input_file": {}
+  },
+  {
+    "path": "posts/welcome/",
+    "title": "Welcome to GFC Learning",
+    "description": "Welcome to my blog, GFC Learning.",
+    "author": [
+      {
+        "name": "Graham Cox",
+        "url": {}
+      }
+    ],
+    "date": "2022-08-14",
+    "categories": [
+      "Welcome",
+      "Excel",
+      "Power Query",
+      "Power Pivot",
+      "DAX",
+      "VBA",
+      "R",
+      "Tidyverse",
+      "ggplot"
+    ],
+    "contents": "\r\nExcel question?\r\nProblems with Power Query?\r\nHere I will try to answer some of the more obscure questions you may\r\nhave about using MS Excel and Power Query, PowerPivot, DAX and using the\r\nExcel Data Model and throw some Visual Basic for Applications (VBA) into\r\nthe mix.\r\n\r\n\r\n\r\nI have also recently been learning the programming language\r\nR. There will also be posts using R showing\r\nhow I have been using it for data transformations and data\r\nvisulisations.\r\n\r\nThis website was built completely in R using the distill\r\npackage. Distill is a publication format for scientific and technical\r\nwriting, native to the web.\r\nLearn more about using Distill for R Markdown at https://rstudio.github.io/distill.\r\n\r\n\r\n\r\n\r\n",
+    "preview": "posts/welcome/./logo.jpg",
+    "last_modified": "2022-08-14T16:17:40+01:00",
+    "input_file": {}
+  }
+]

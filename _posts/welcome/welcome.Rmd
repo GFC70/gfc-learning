@@ -1,0 +1,49 @@
+---
+title: "Welcome to GFC Learning"
+description: |
+  Welcome to my blog, GFC Learning. 
+author: Graham Cox
+date: 08-14-2022
+output:
+  distill::distill_article:
+    self_contained: false
+categories:
+  - Welcome
+  - Excel
+  - Power Query
+  - Power Pivot
+  - DAX
+  - VBA
+  - R
+  - Tidyverse
+  - ggplot
+preview: ./logo.jpg
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+```
+
+
+### Excel question? Problems with Power Query?
+
+Here I will try to answer some of the more obscure questions you may have about using MS Excel and Power Query, PowerPivot, DAX and using the Excel Data Model and throw some Visual Basic for Applications (VBA) into the mix.
+
+<br>
+<center>
+![](./images.jpg){width=80%}
+</center>
+<br>
+
+I have also recently been learning the programming language `R`. There will also be posts using `R` showing how I have been using it for data transformations and data visulisations.
+
+
+<div style="margin-top:250px;font-size:11pt">
+<hr />
+This website was built completely in R using the `distill` package. Distill is a publication format for scientific and technical writing, native to the web. 
+
+Learn more about using Distill for R Markdown at <https://rstudio.github.io/distill>.
+
+</div>
+

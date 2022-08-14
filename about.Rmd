@@ -1,0 +1,47 @@
+---
+title: "About this blog"
+description: |
+  Some additional details about me
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Overview
+
+Worked in the IT industry for 24 years with experience in a multi-vendor environment in physical and global virtual teams.
+
+Using MS Office products, most recently the Power Query and Power Pivot tools in MS Excel, to produce high quality views and analysis of large data sets.
+
+Recently learning the R programming language to analyse large data sets and to produce data visualisations
+
+Mentoring and coaching colleagues, allowing them to move onto new career paths and positions
+
+## Achievements
+
+- Using the R programming language to analysis over 4.5 million rows of data to identify blockages in processes
+- Providing senior management with both an overview and detailed view of outstanding debt 
+- Reducing a daily six hour task to less than 15 minutes per day by automating email creation for new work requests 
+- Reducing turn around times for client non-standard service requests from over 80 days to less than 10 working days
+- Self service tool for users to extract data and present in a variety of charting formats
+- A tool to collate estimated prices for work in a consistent format and to supply summarised reports to clients; identifying stale sales opportunities worth over $12m
+- Management of a global Change Request process to monitor and implement changes from project teams and clients
+
+## Testimonials
+
+
+> <i class="fa fa-quote-left" aria-hidden="true"></i>  Adept at taking user requirements (usually vague verbal/email requests) and responding with astutely accurate deliverables.
+And he delivers quickly to boot  <i class="fa fa-quote-right" aria-hidden="true"></i> <br />- Former Project Manager
+
+
+> <i class="fa fa-quote-left" aria-hidden="true"></i>  You leave behind a legacy you can be proud of and that will have a lasting impact on the careers of all who learned from you.  <i class="fa fa-quote-right" aria-hidden="true"></i><br />- Former Team Leader
+
+<br />
+<center>
+<a href="https://www.linkedin.com/in/grahamcox1970/" target="_blank"><i class="fa fa-linkedin"></i> LinkedIn</a>
+&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="https://github.com/GFC1970" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+</center>
+
+<div style="margin-bottom:100px"></div>
