@@ -3,7 +3,7 @@ title: "Welcome to GFC Learning"
 description: |
   Welcome to my blog, GFC Learning. 
 author: Graham Cox
-date: 08-14-2022
+date: 2022-08-14
 output:
   distill::distill_article:
     self_contained: false
