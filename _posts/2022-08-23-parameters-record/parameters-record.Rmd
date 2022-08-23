@@ -35,7 +35,7 @@ font-size: 70%
 ```
 # The Problem
 
-In the [last past](https://gfc-learning.netlify.app/posts/2022-08-15-how-to-parameterise/) we learnt how to create Power Query parameters from named ranges on a worksheet using just one line of M Code. This method is great if the set of queries only have a few parameters that would be references, but what if there were many parameters? There is the possibility that with a large number of parameters, keep track of them all in the Power Query Editor could cause issues. What if we could store them all in one query?
+In the [last post](https://gfc-learning.netlify.app/posts/2022-08-15-how-to-parameterise/) we learnt how to create Power Query parameters from named ranges on a worksheet using just one line of M Code. This method is great if the set of queries only have a few parameters that would be references, but what if there were many parameters? There is the possibility that with a large number of parameters, keep track of them all in the Power Query Editor could cause issues. What if we could store them all in one query?
 
 # The Solution
 
