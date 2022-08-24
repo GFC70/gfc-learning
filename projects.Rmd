@@ -1,0 +1,18 @@
+---
+title: "Projects"
+description: |
+  Projects and Learning
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Overview
+
+Here I will post details of data analysis and data visualisation projects i have been working on. 
+
+They will cover a wide range of datasets, and presented in both R and MS Excel. 
+
+
+
