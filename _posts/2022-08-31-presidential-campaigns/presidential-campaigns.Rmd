@@ -1,0 +1,375 @@
+---
+title: "Presidential Donations"
+description: |
+  How much were donations made to Presidential Campaigns?.
+author: Graham Cox
+date: 2022-08-30
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_depth: 2
+categories:
+  - R
+  - Tidy Tuesdays
+  - dplyr
+  - ggplot
+preview: ./us_map.jpg
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(tidyverse)
+library(lubridate)
+library(showtext)
+library(ggtext)
+library(scales)
+
+
+
+```
+
+```{=html}
+<style>
+d-article li {
+margin-bottom: 2px
+}
+
+d-article code {
+color: #595959;
+font-size: 70%
+}
+
+</style>
+```
+
+# Tidy Tuesday
+
+I decided to start posting items for the `R for Data Science Tidy Tuesday` project where data sets are released each Monday as part of the `R4DS Online Learning Community`. A quote from the [home page](https://github.com/rfordatascience/tidytuesday) states - 
+
+> The intent of Tidy Tuesday is to provide a safe and supportive forum for individuals to practice their wrangling and data visualization skills independent of drawing conclusions. While we understand that the two are related, the focus of this practice is purely on building skills with real-world data.
+
+# The Data
+
+I found the datasets used in this post by accident, while looking for another item for a totally unrelated project, and thought this would be a good starter for my first contribution.
+
+The dataset is available [here](https://ocw.mit.edu/courses/res-6-009-how-to-process-analyze-and-visualize-data-january-iap-2012/pages/datasets-and-code/) and is a zip file and the contents extracted to the data sub-folder. 
+
+> The file is large, over 600Mb, so if you choose to use this data, be mindful of where you store the csv file.
+
+
+```{r echo=TRUE}
+
+# Read data to a data frame
+
+df <- read_csv("P00000001-ALL.csv",
+               show_col_types = FALSE)
+
+str(df)
+
+```
+
+16 variables are available in the data, but I will concentrate on the `contbr_st`, `contb_receipt_dt` and `contb_receipt_amt` variables to create a map showing which states contributed the most dollars to campaigns. I'm not happy with those variable names, so lets rename them.
+
+## Tidy the data
+
+```{r echo=TRUE}
+
+df <- df %>% 
+  select(
+    city = contbr_city,
+    state_abb = contbr_st,
+    amount = contb_receipt_amt,
+    date = contb_receipt_dt
+  )
+
+```
+
+## Add variables
+
+Let's continue some basic tidying up of the data by ensuring the `date` variable is recognised as a proper date values and add a `year` variable.
+
+```{r echo=TRUE}
+
+df <- df %>% 
+  mutate(date = dmy(date),
+         yr = as.numeric(year(date)))
+
+```
+
+## What's in the data?
+
+What sort of spread of data do we have for each year in the data?
+
+```{r echo=TRUE}
+
+df %>% 
+  group_by(yr) %>% 
+  count(yr)
+
+```
+
+It looks like the first three years worth of the data contain low numbers, so let's exclude them from the data set - we may want to facet the data later when we plot the map.
+
+```{r echo=TRUE}
+
+df <- df %>% 
+  filter(date >= as.Date("2007-01-01"))
+
+```
+
+# US State data
+
+I had been aware of the built-in data sets within R and the various libraries, but had never used them in a project. Let's change that and get some data relating to the US States.
+
+```{r echo=TRUE}
+
+state_names <- data.frame(state_abb = state.abb,
+                          state_name = state.name)
+
+head(state_names)
+
+```
+
+Looking at the `data_map("state")` data set that comes with `ggplot2`, containing the longitude and latitude variables for states, the region name is in lowercase, so let's create that data frame again, with a lower case state name
+
+```{r echo=TRUE}
+
+state_names <- data.frame(state_abb = state.abb,
+                          state_name = str_to_lower(state.name))
+
+head(state_names)
+
+```
+
+Create a new data frame containing the longitude and latitude variables and join it to the `state names`
+
+```{r echo=TRUE}
+
+map_coords <- map_data("state") %>% 
+  inner_join(state_names, by = c("region" = "state_name"))
+
+head(map_coords)
+
+```
+
+# Calculating the plot data
+
+To plot the data for amounts donated to the Presidential Campaigns, we need the total amounts by state.
+
+```{r echo=TRUE}
+
+donations_by_state <- df %>% 
+  group_by(state_abb, yr) %>% 
+  summarise(total_amount = sum(amount), .groups = "drop")
+
+head(donations_by_state)
+
+```
+
+## Joining the data
+
+We can see from the `donations_by_state` data frame, we have multiple rows with invalid state names.
+
+```{r echo=TRUE}
+
+unique(donations_by_state$state_abb)
+
+```
+
+By joining the data frame to the `map_coords` data frame, these invalid rows will be removed.
+
+```{r echo=TRUE}
+
+plot_data <- inner_join(x = map_coords, y = donations_by_state)
+
+head(plot_data)
+
+```
+
+# Building the plot
+
+Now we have the data joined together, let's make the first plot to see what we have.
+
+```{r echo=TRUE, layout="l-body-outset", fig.width=7, fig.height=5}
+
+p <- ggplot(plot_data, aes(long, lat)) +
+  geom_polygon(aes(group = group, fill = total_amount),
+               colour = "grey30",
+               size = .2)
+
+p
+
+```
+
+I definitely do not like that standard blue for a continuous scale, we will change that later on!
+
+We can tell which are the top states making donations, but my being a Brit, I'm not always confident on which states are which (I know California, Texas and New York though!), so let's find out the top 5 states making donations by looking at the `donations_by_state` data frame again. We can use this later to create some descriptive text for the plot subtitle.
+
+```{r echo=TRUE}
+
+top_five_state_abb <- donations_by_state %>% 
+  group_by(state_abb) %>% 
+  summarise(total_amount = sum(total_amount)) %>% 
+  arrange(desc(total_amount)) %>% 
+  top_n(n = 5)
+
+top_five_state_abb
+
+```
+
+## Creating plot labels
+
+So we can have a plot that explains what is being shown, we can create some text variables that will be used by the `labs` function when creating the plot.
+
+```{r echo=TRUE}
+
+plot_title <- "Which states donated the most for the US Presidential Campaigns?"
+
+plot_caption <- "Data Source: https://ocw.mit.edu/courses/res-6-009-how-to-process-analyze-and-visualize-data-january-iap-2012/pages/datasets-and-code/"
+
+```
+Making a descriptive subtitle for the plot, we need to look back at some of the earlier data frames and summarise the data a little further.
+
+```{r echo=TRUE}
+total_donations <- inner_join(x = state_names, y = df) %>% 
+  summarise(total_amount = sum(amount)) %>% pull(total_amount)
+
+total_donations
+
+```
+
+Create the total amount donated by the top five states and calculate the percentage of all donations.
+
+```{r echo=TRUE}
+
+top_five_amount <- sum(top_five_state_abb$total_amount)
+
+top_five_pct <- percent(top_five_amount / total_donations, accuracy = .2)
+
+top_five_amount <- dollar(top_five_amount, accuracy = .2, scale = 1e-6, suffix = "m")
+
+total_donations <- dollar(total_donations, accuracy = .2, scale = 1e-6, suffix = "m")
+
+top_five_amount
+
+top_five_pct
+
+total_donations
+
+```
+
+Create a text string for the top five states donating.
+
+```{r echo=TRUE}
+
+top_five_states <- toString(top_five_state_abb %>% pull(state_abb))
+
+```
+
+Now we have the amounts needed for the subtitle, lets make the text variable, with a line break at the start to add some spacing.
+
+```{r echo=TRUE}
+
+plot_subtitle <- glue::glue(
+  "A total of {total_donations} was contributed from all states, with the top five states of {top_five_states}, contributing a total of {top_five_amount},<br />representing {top_five_pct} of all donations in 2007 & 2008")
+
+```
+## Making the final plot
+
+```{r echo=TRUE, layout="l-body-outset", fig.width=7, fig.height=5}
+
+p <- p +
+  labs(
+    title = plot_title,
+    subtitle = plot_subtitle,
+    caption = plot_caption,
+    fill = NULL # Remove legend title
+  )
+
+p
+
+```
+
+## Change those colours
+
+As I said previously, I do not like the standard blue colour that comes with a continuous scale, let's change and change the type of map projection shown in the plot.
+
+
+```{r echo=TRUE, layout="l-body-outset", fig.width=7, fig.height=5}
+
+p <- p +
+  scale_fill_continuous(
+    low = '#FFF8DC',
+    high = '#8B1A1A',
+    labels = label_dollar(
+      scale = 1e-6,
+      suffix = "m",
+      accuracy = .2
+    )
+  ) +
+  coord_map(projection = "mollweide")
+
+p
+
+```
+
+## Improving the theme
+
+Load my preferred fonts for plot text and titles.
+
+```{r echo=TRUE}
+font_add_google(family = "roboto-slab", "Roboto Slab")
+font_add_google(family = "roboto-condensed", "Roboto Condensed")
+
+showtext_auto()
+```
+
+Void the theme by using `theme_void`
+
+```{r echo=TRUE, layout="l-body-outset", fig.width=7, fig.height=5}
+
+p <- p + theme_void()
+
+p 
+
+```
+As the amount of text for the title and subtitle overflow the plot area, we need to use the `element_textbox_simple` from the `ggtext` package to allow for overflowing text and add all the other plot theme elements.
+
+```{r echo=TRUE, layout="l-body-outset", fig.width=8, fig.height=6}
+
+p <- p +
+  theme(
+    text = element_text(family = "roboto-condensed", size = 22),
+    plot.margin = margin(rep(1, 4), unit = "cm"),
+    legend.direction = "horizontal",
+    legend.position = "bottom",
+    legend.key.height = unit(.8, units = "lines"),
+    legend.key.width = unit(3.5, units = "lines"),
+    legend.margin = margin(b = 1, unit = "lines"),
+    plot.title = element_text(
+      face = "bold",
+      size = 26,
+      family = "roboto-slab",
+      colour = "#8B1A1A"
+    ),
+    plot.title.position = "plot",
+    plot.subtitle = element_markdown(),
+    plot.caption = element_text(size = 14, hjust = 0, face = "italic"),
+    plot.caption.position = "plot",
+    panel.grid = element_line(
+      colour = "grey30",
+      size = .2,
+      linetype = "dashed"
+    )
+  )
+
+p
+
+```
+
+# Conclusion
+
+Overall, for a first attempt at using the maps data sets and plotting data, I'm happy with the result.
