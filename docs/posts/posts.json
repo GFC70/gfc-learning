@@ -1,5 +1,28 @@
 [
   {
+    "path": "posts/2022-11-15-non-pivotpivots/",
+    "title": "Making non-pivot tables summaries - Part 1",
+    "description": "Sometimes people will mess up your pivot tables. Sometimes people will be terrified of pivot tables.",
+    "author": [
+      {
+        "name": "Graham Cox",
+        "url": {}
+      }
+    ],
+    "date": "2022-11-15",
+    "categories": [
+      "Excel",
+      "Pivot Tables",
+      "CHOOSE, UNIQUE, SORT",
+      "Spilled Arrays",
+      "Tips & Tricks"
+    ],
+    "contents": "\r\n\r\nContents\r\nThe Problem\r\nThe Solution\r\nThe Source Data\r\nSummary using a normal pivot table\r\nUsing CHOOSE and UNIQUE\r\nCHOOSE\r\nUNIQUE\r\n\r\nPutting it all together\r\nCreating our two formulas\r\nSorting the summary\r\n\r\n\r\nConclusion\r\n\r\nThe Problem\r\nI have worked with many project managers over the last 25 years. Many of them were very good at using MS Excel, some though were not. Two project managers spring to mind though. One was terrified of pivot tables. They insisted on not using them and would create workbooks with a sea of COUNTIFS and SUMIFS formulas. The other project manager loved pivot tables. Could not get enough of them. They would create pivot tables with practically every column available in a dataset, creating pivot tables that, if printed, could waste several trees of paper they were so large.\r\nThe Solution\r\nWith the recent addition of spilled arrays in MS Excel, creating summaries of data can be completed using just one formula. The advantage of using spilled arrays for summaries of data is that they updated automatically when new data is added to the source data unlike pivot tables, or summaries calculated through Power Query, that need to be refreshed via the Ribbon.\r\nThe Source Data\r\nThe source data we will be using for this example is shown below. A simple table of just 15 rows of data showing orders made by certain departments in a company, the name of the supplier, the order and ship date along with the amount of the order.\r\nSource DataThe data is saved in an MS Excel table with the name of Data on its own worksheet. We shall be adding a summary of the data by department showing how much each one spent on orders. Over the next several posts we shall expand on what the summary shows and the possible solutions.\r\nSummary using a normal pivot table\r\nUsing a normal pivot table for the source data, we are shown the summary below. We shall be recreating this summary using one formula.\r\nPivot Table SummaryUsing CHOOSE and UNIQUE\r\nA simple one cell summary formula can be created using the CHOOSE and UNIQUE formulas. But first lets look at the CHOOSE function in a little more details.\r\nCHOOSE\r\nThe MS Excel help for CHOOSE states:\r\n\r\nUses index_num to return a value from the list of value arguments. Use CHOOSE to select one of up to 254 values based on the index number. For example, if value1 through value7 are the days of the week, CHOOSE returns one of the days when a number between 1 and 7 is used as index_num.\r\n\r\nUsing the above description, we can create a formula that will identify the day of the week based on an input number.\r\nCHOOSE formulaThe CHOOSE function can also spilled values across columns. By using curly braces with a list of numbers in the first argument of the CHOOSE formula, we can add values across multiple columns in a row.\r\nCHOOSE formula spilling across many columnsAs shown in the image above, the three cells containing values in columns C, D and E have a blue border around. This indicates a spilled array.\r\nUNIQUE\r\nOne of the more powerful formulas to be added to MS Excel in recent years is the UNIQUE formula. As the name suggests, the formula will extract a list of unique values from a range of cells.\r\nUNIQUE formulaPutting it all together\r\nLooking at the standard pivot table solution shown above, we need to decide what we need to include in our summary of data.\r\nA list of unique department names from our source data table\r\nA SUMIF formula to calculate the total amount for each department\r\nCreating our two formulas\r\nFor our list of department names, we can use the formulas\r\n=UNIQUE(Data[Dept]) for the first column\r\n=SUMIF(Data[Dept], UNIQUE[Dept], Data[Amount]) for the second column\r\nUsing the CHOOSE formula that spills values across columns we can then create the formula below.\r\nSummary of DataWe get the same results, but with the department names in a different order.\r\nSorting the summary\r\nSorting the summary of data into the same order as the pivot table is as simple as wrapping our CHOOSE formula inside a SORT formula.\r\nSorted SummaryConclusion\r\nThis is a simple, but still powerful method to create a pivot table style summary using just formulas held in just one cell. This example could be expanded by amending the initial parameter in the CHOOSE function to show {1,2,3} and include a final column that shows the count of orders for each department.\r\nIn the next post, we will look at creating the same summary, but using two new formulas available in MS Excel - LET and SEQUENCE\r\n\r\n\r\n\r\n",
+    "preview": "posts/2022-11-15-non-pivotpivots/./pivot-table-summary.jpg",
+    "last_modified": "2022-11-15T17:20:07+00:00",
+    "input_file": "non-pivotpivots.knit.md"
+  },
+  {
     "path": "posts/2022-09-13-add-many-columns/",
     "title": "Adding Multiple Columns in Power Query",
     "description": "Adding multiple columns in Power Query can involve adding may steps. How about if it was possible to add many columns in one step?",
