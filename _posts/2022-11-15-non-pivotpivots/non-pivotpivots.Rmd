@@ -12,7 +12,9 @@ output:
 categories:
   - Excel
   - Pivot Tables
-  - CHOOSE, UNIQUE, SORT
+  - CHOOSE
+  - UNIQUE
+  - SORT
   - Spilled Arrays
   - Tips & Tricks
 preview: ./pivot-table-summary.jpg
