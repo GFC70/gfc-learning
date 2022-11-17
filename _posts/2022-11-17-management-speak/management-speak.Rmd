@@ -1,0 +1,60 @@
+---
+title: "What do these even mean?"
+description: |
+  A project manager from a few years ago was very fond of management speak. Here are some of his classics
+author: Graham Cox
+date: 2022-11-17
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: false
+categories:
+  - Fun
+  - Management Speak
+preview: ./speech.jpg
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+```{=html}
+<style>
+d-article li {
+margin-bottom: 7px
+}
+
+</style>
+```
+
+# Management Speak
+
+In my previous post, I mentioned some project managers I had worked with over the past 25 years. This brought to mind a project manager, who I briefly worked with, and was determined to add as many phrases into his meetings as possible. 
+
+Google defines **Management Speak** as
+
+> language regarded as characteristic of that used by managers in business, especially in being needlessly complex or filled with jargon.
+
+And with daily meetings, there were a lot. Here are the phrases I can remember or have made a note of.
+
+- You can't rearrange the deckchairs on a sinking ship
+- Let me paint a pen picture of our labour pyramid
+- Let's not be a crocodile lurking in the weeds
+- Let's take the topside on the argument before we chuck the sauce to it
+- At the moment we are just treading water around the common bazaars without the ability to gain the correct traction
+- Let's start getting to the mindset of not standing on shifting sands
+- We need to make sure our Knowledge Silos are able to withstand an attack
+- What's the assumption on the fleshing out task? 
+- Stand up with our faces in the wind
+- Let me point you towards the correct pictures so we can all have a group hug and have a proper drive at this
+- Let's focus on the future horizon and makes sure it is never cloudy
+
+And the all time classic, that was not actually said by this particular project manager, but was used in a teleconference and said by a team member working in the US.
+
+- Let's put that in the Thought Fridge and see who opens the door to munch on it
+
+Please, stop. Just stop.
+
+

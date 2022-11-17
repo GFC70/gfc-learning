@@ -1,5 +1,25 @@
 [
   {
+    "path": "posts/2022-11-17-management-speak/",
+    "title": "What do these even mean?",
+    "description": "A project manager from a few years ago was very fond of management speak. Here are some of his classics",
+    "author": [
+      {
+        "name": "Graham Cox",
+        "url": {}
+      }
+    ],
+    "date": "2022-11-17",
+    "categories": [
+      "Fun",
+      "Management Speak"
+    ],
+    "contents": "\r\nManagement Speak\r\nIn my previous post, I mentioned some project managers I had worked with over the past 25 years. This brought to mind a project manager, who I briefly worked with, and was determined to add as many phrases into his meetings as possible.\r\nGoogle defines Management Speak as\r\n\r\nlanguage regarded as characteristic of that used by managers in business, especially in being needlessly complex or filled with jargon.\r\n\r\nAnd with daily meetings, there were a lot. Here are the phrases I can remember or have made a note of.\r\nYou can’t rearrange the deckchairs on a sinking ship\r\nLet me paint a pen picture of our labour pyramid\r\nLet’s not be a crocodile lurking in the weeds\r\nLet’s take the topside on the argument before we chuck the sauce to it\r\nAt the moment we are just treading water around the common bazaars without the ability to gain the correct traction\r\nLet’s start getting to the mindset of not standing on shifting sands\r\nWe need to make sure our Knowledge Silos are able to withstand an attack\r\nWhat’s the assumption on the fleshing out task?\r\nStand up with our faces in the wind\r\nLet me point you towards the correct pictures so we can all have a group hug and have a proper drive at this\r\nLet’s focus on the future horizon and makes sure it is never cloudy\r\nAnd the all time classic, that was not actually said by this particular project manager, but was used in a teleconference and said by a team member working in the US.\r\nLet’s put that in the Thought Fridge and see who opens the door to munch on it\r\nPlease, stop. Just stop.\r\n\r\n\r\n\r\n",
+    "preview": "posts/2022-11-17-management-speak/./speech.jpg",
+    "last_modified": "2022-11-17T16:44:36+00:00",
+    "input_file": "management-speak.knit.md"
+  },
+  {
     "path": "posts/2022-11-15-non-pivotpivots/",
     "title": "Making non-pivot tables summaries - Part 1",
     "description": "Sometimes people will mess up your pivot tables. Sometimes people will be terrified of pivot tables.",
