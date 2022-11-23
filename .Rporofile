@@ -1,0 +1,20 @@
+options(scipen=999)
+
+.First <- function(){
+   # Set Library paths for packages
+  .libPaths("C:/Program Files/R/R-4.2.1/library")
+  
+  library(distill)
+}
+
+
+
+silentLoad <- function(p) {
+  cat(paste(Sys.time(),'Loading package:',p,'\n'))
+  suppressWarnings(suppressPackageStartupMessages(library(p, character.only = T)))
+  cat(paste(Sys.time(),'Package loaded:','\n'))
+}
+
+.Last <- function() {
+  cat('Bye for now...')
+}

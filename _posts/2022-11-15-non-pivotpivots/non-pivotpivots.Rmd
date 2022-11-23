@@ -120,7 +120,7 @@ Sorting the summary of data into the same order as the pivot table is as simple 
 
 This is a simple, but still powerful method to create a pivot table style summary using just formulas held in just one cell. This example could be expanded by amending the initial parameter in the `CHOOSE` function to show `{1,2,3}` and include a final column that shows the count of orders for each department.
 
-In the next post, we will look at creating the same summary, but using two new formulas available in MS Excel - `LET` and `SEQUENCE`
+In the [next part](https://gfc-learning.netlify.app/posts/2022-11-23-non-pivotpivots-part-two/), we will look at creating the same summary, but using two new formulas available in MS Excel - `LET` and `SEQUENCE`
 
 
 
