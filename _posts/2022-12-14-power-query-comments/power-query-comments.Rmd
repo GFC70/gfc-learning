@@ -1,0 +1,143 @@
+---
+title: "Using comments in Power Query"
+description: |
+  Comments are essential when developing power query items. They help to remind users what is happening and also for you develop the initial query.
+author: Graham Cox
+date: 2022-12-14
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+categories:
+  - Excel
+  - POwer Query
+  - Tips & Tricks
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+```{=html}
+<style>
+d-article li {
+margin-bottom: 2px
+}
+
+d-article code {
+color: #595959;
+font-size: 70%
+}
+
+</style>
+```
+
+# Power Query Comments
+
+When writing new Power Query items, it is good practice that comments are entered in the Advanced Editor window, to not only help you when you look back at a query weeks or months in the future, but also for others viewing the query.
+
+Depending on the complexity of the query, either one line or multi-line comments should be added, along with a header comment giving a basic overview of what the query actually does with data.
+
+## Single Line Comments
+
+A comment that is only on one line, maybe a quick explanation of what a particulat step performs, should be prefaced with two forward slashes, `//`, as below.
+
+```
+let
+    // Import data from Wiki page at the URL shown
+    Source = Web.Page(Web.Contents("https://en.wikipedia.org/wiki/List_of_London_Underground_stations")){0}[Data]
+in
+    Source
+```
+
+## Multi-line Comments
+
+To enter a multi-line comment, such as an overview of the steps taken by the query, comments should start with a `/*` and end with a `*/`, as shown below. Adding a list of steps to the header comment at the initial creation of the data also acts as a reminder of the transformations that are needed to be completed to obtain the final result.
+
+```
+/* 
+Query imports a complete list of London Underground Stations from the Wikipedia URL shown in the first step
+
+1. Imports data from URL
+2. Selects required columns
+3. Split Zones where station is in two zones
+4. Sets data types
+5. Rename columns
+ */
+
+let
+    // Import data from Wiki page at the URL shown
+    Source = Web.Page(Web.Contents("https://en.wikipedia.org/wiki/List_of_London_Underground_stations")){0}[Data]
+in
+    Source
+```
+
+# Keyboard Shortcuts
+
+To add the relevant comment indicators using keyboard shortcuts, the key combinations below should be used.
+
+```
+CTRL + // to add or remove a single line comment
+
+ALT + SHIFT + A to add or remove a multi-line comment
+```
+
+# The Final Query
+
+The full query with comments.
+
+```
+/* 
+Query imports a complete list of London Underground Stations from the Wikipedia URL shown in the first step
+
+1. Import data from URL
+2. Select required columns
+3. Split Zones where station is in two zones
+4. Sets data types
+5. Rename columns
+
+ */
+
+let
+    // Import data from Wiki page at the URL shown
+    Source = Web.Page(Web.Contents("https://en.wikipedia.org/wiki/List_of_London_Underground_stations")){0}[Data],
+
+    // First row as headers
+    MakeHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+
+    // Select the required columns
+    SelectColumns = Table.SelectColumns(MakeHeaders,
+        {"Station", "Line(s)", "Zone(s)", "Usage"}
+    ),
+
+    // Split Zone column by the & delimiter to new rows where a station is in two fare zones
+    SplitByDelimiter = Table.ExpandListColumn(
+        Table.TransformColumns(SelectColumns, 
+            {
+                {"Zone(s)", Splitter.SplitTextByDelimiter(" & ", QuoteStyle.Csv), 
+                let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}
+            }
+            ), 
+        "Zone(s)"
+    ),
+
+    // Set Data types
+    SetZoneDataType = Table.TransformColumnTypes(SplitByDelimiter,
+        {
+            {"Zone(s)", Int64.Type}, 
+            {"Usage", type number}, 
+            {"Station", type text}, 
+            {"Line(s)", type text}
+        }
+    ),
+
+    // Rename columns i.e. remove (s) from column headers
+    RenameColumns = Table.RenameColumns(SetZoneDataType,
+        {
+            {"Line(s)", "Lines"}, {"Zone(s)", "Zones"}
+        }
+    )
+in
+    RenameColumns
+
+```

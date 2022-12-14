@@ -1,5 +1,26 @@
 [
   {
+    "path": "posts/2022-12-14-power-query-comments/",
+    "title": "Using comments in Power Query",
+    "description": "Comments are essential when developing power query items. They help to remind users what is happening and also for you develop the initial query.",
+    "author": [
+      {
+        "name": "Graham Cox",
+        "url": {}
+      }
+    ],
+    "date": "2022-12-14",
+    "categories": [
+      "Excel",
+      "POwer Query",
+      "Tips & Tricks"
+    ],
+    "contents": "\r\n\r\nContents\r\nPower Query Comments\r\nSingle Line Comments\r\nMulti-line Comments\r\n\r\nKeyboard Shortcuts\r\nThe Final Query\r\n\r\nPower Query Comments\r\nWhen writing new Power Query items, it is good practice that comments are entered in the Advanced Editor window, to not only help you when you look back at a query weeks or months in the future, but also for others viewing the query.\r\nDepending on the complexity of the query, either one line or multi-line comments should be added, along with a header comment giving a basic overview of what the query actually does with data.\r\nSingle Line Comments\r\nA comment that is only on one line, maybe a quick explanation of what a particulat step performs, should be prefaced with two forward slashes, //, as below.\r\nlet\r\n    // Import data from Wiki page at the URL shown\r\n    Source = Web.Page(Web.Contents(\"https://en.wikipedia.org/wiki/List_of_London_Underground_stations\")){0}[Data]\r\nin\r\n    Source\r\nMulti-line Comments\r\nTo enter a multi-line comment, such as an overview of the steps taken by the query, comments should start with a /* and end with a */, as shown below. Adding a list of steps to the header comment at the initial creation of the data also acts as a reminder of the transformations that are needed to be completed to obtain the final result.\r\n/* \r\nQuery imports a complete list of London Underground Stations from the Wikipedia URL shown in the first step\r\n\r\n1. Imports data from URL\r\n2. Selects required columns\r\n3. Split Zones where station is in two zones\r\n4. Sets data types\r\n5. Rename columns\r\n */\r\n\r\nlet\r\n    // Import data from Wiki page at the URL shown\r\n    Source = Web.Page(Web.Contents(\"https://en.wikipedia.org/wiki/List_of_London_Underground_stations\")){0}[Data]\r\nin\r\n    Source\r\nKeyboard Shortcuts\r\nTo add the relevant comment indicators using keyboard shortcuts, the key combinations below should be used.\r\nCTRL + // to add or remove a single line comment\r\n\r\nALT + SHIFT + A to add or remove a multi-line comment\r\nThe Final Query\r\nThe full query with comments.\r\n/* \r\nQuery imports a complete list of London Underground Stations from the Wikipedia URL shown in the first step\r\n\r\n1. Import data from URL\r\n2. Select required columns\r\n3. Split Zones where station is in two zones\r\n4. Sets data types\r\n5. Rename columns\r\n\r\n */\r\n\r\nlet\r\n    // Import data from Wiki page at the URL shown\r\n    Source = Web.Page(Web.Contents(\"https://en.wikipedia.org/wiki/List_of_London_Underground_stations\")){0}[Data],\r\n\r\n    // First row as headers\r\n    MakeHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),\r\n\r\n    // Select the required columns\r\n    SelectColumns = Table.SelectColumns(MakeHeaders,\r\n        {\"Station\", \"Line(s)\", \"Zone(s)\", \"Usage\"}\r\n    ),\r\n\r\n    // Split Zone column by the & delimiter to new rows where a station is in two fare zones\r\n    SplitByDelimiter = Table.ExpandListColumn(\r\n        Table.TransformColumns(SelectColumns, \r\n            {\r\n                {\"Zone(s)\", Splitter.SplitTextByDelimiter(\" & \", QuoteStyle.Csv), \r\n                let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}\r\n            }\r\n            ), \r\n        \"Zone(s)\"\r\n    ),\r\n\r\n    // Set Data types\r\n    SetZoneDataType = Table.TransformColumnTypes(SplitByDelimiter,\r\n        {\r\n            {\"Zone(s)\", Int64.Type}, \r\n            {\"Usage\", type number}, \r\n            {\"Station\", type text}, \r\n            {\"Line(s)\", type text}\r\n        }\r\n    ),\r\n\r\n    // Rename columns i.e. remove (s) from column headers\r\n    RenameColumns = Table.RenameColumns(SetZoneDataType,\r\n        {\r\n            {\"Line(s)\", \"Lines\"}, {\"Zone(s)\", \"Zones\"}\r\n        }\r\n    )\r\nin\r\n    RenameColumns\r\n\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2022-12-14T17:59:26+00:00",
+    "input_file": "power-query-comments.knit.md"
+  },
+  {
     "path": "posts/2022-11-23-non-pivotpivots-part-two/",
     "title": "Making non-pivot tables summaries - Part 2",
     "description": "Sometimes people will mess up your pivot tables. Sometimes people will be terrified of pivot tables. In this second part of this series on non-pivot pivot tables, we look at the LET function to create one cell reports",
