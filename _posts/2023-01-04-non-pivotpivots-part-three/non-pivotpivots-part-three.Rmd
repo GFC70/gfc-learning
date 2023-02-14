@@ -3,7 +3,7 @@ title: "Making non-pivot tables summaries - Part 3"
 description: |
   Sometimes people will mess up your pivot tables. Sometimes people will be terrified of pivot tables. In this third part of this series on non-pivot pivot tables, we look at the two new functions - HSTACK and VSTACK - combine them both with LET and we have true one cell reports.
 author: Graham Cox
-date: 2022-01-04
+date: 2023-01-04
 output:
   distill::distill_article:
     self_contained: false
