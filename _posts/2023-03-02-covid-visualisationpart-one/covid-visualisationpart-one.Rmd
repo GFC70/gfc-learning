@@ -1,0 +1,310 @@
+---
+title: "Visualising UK Covid-19 Data"
+description: |
+  A recent news report suggested that Covid-19 cases in England and Wales are increasing once more.  
+author: Graham Cox
+date: 2023-03-02
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_depth: 3
+categories:
+  - R
+  - Data Analysis
+  - Data Visualisation
+  - Charting
+  - Covid-19
+preview: ./all_areas_line_chart.png
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+pacman::p_load("dplyr", "tidyr", "stringr", "lubridate",
+        "readr", "ggplot2", "tibble", "forcats", "scales", "ggtext",
+        "showtext", "ggpubr", "zoo")
+
+```
+
+```{=html}
+<style>
+d-article li {
+margin-bottom: 2px
+}
+
+d-article pre {
+color: #595959;
+background: #D9D9D9;
+font-size: 70%
+}
+</style>
+```
+
+# Overview
+
+A recent news report, I cannot remember where, suggested that the number of Covid-19 cases in England and Wales have been increasing since the start of February 2023. 
+
+During the first Covid-19 lockdown in the UK, I started to download the UK government's Covid-19 datasets to expand my knowledge and skills to use the ggplot2 package to create visualisations of the data.
+
+The data available, and method of downloading the data has expanded considerable since then and is now available via a URL rather than using an API and custom functions.
+
+# Downloading Covid-19 Data
+
+Previously, a package was available to download data. I had used it on several occasions but found it slow and sometimes the data was not consistent or was missing values. 
+
+Looking again at the UK government's [Covid-19 Dashboard](https://coronavirus.data.gov.uk/details/download){target="_blank"}, an option is available to create a custom URL that will create a CSV file containing the required data.
+
+## Download URL
+
+Using the link above, searching through the many metrics that are available, I settled on using the metric named `newCasesBySpecimenDate`. The Metrics Documentation for this item states:
+
+> COVID-19 cases are identified by taking specimens from people and testing them for the SARS-CoV-2 virus. If the test is positive, this is a case. 
+
+Using the URL built on the download page, we can obtain the data using `read_csv` from the `readr` package.
+
+```{r echo=TRUE, eval=FALSE}
+
+# Download URL
+url <- "https://api.coronavirus.data.gov.uk/v2/data?
+areaType=utla&metric=newCasesBySpecimenDate&format=csv"
+
+
+df <- read_csv(url) %>% 
+  # clean column names
+  janitor::clean_names() %>%
+  # add new variable based on first letter of area_code
+	mutate(country = if_else(substr(area_code, 1, 1) == "E", 
+	                         "England", 
+	                         "Wales")) %>% 
+  # drop column listing government area type
+  select(-3)
+
+# Write to CSV file
+write_csv(df, file = "all_areas.csv")
+
+```
+
+```{r eval=TRUE, echo=FALSE}
+df <- read_csv("all_areas.csv")
+
+head(df)
+```
+
+# Initial Analysis and Plot
+
+What sort of data do we have in the dataset?
+
+```{r echo=FALSE}
+str(df)
+
+summary(df)
+```
+
+Let's do a quick plot of the data for whole period and all areas.
+
+```{r eval=FALSE, echo=TRUE}
+# Basic line ggplot of all data
+df %>%
+	ggplot(aes(date, new_cases_by_specimen_date)) +
+	geom_line()
+```
+
+```{r, layout="l-body-outset", fig.cap="A simple line plot"}
+knitr::include_graphics("all_areas_line_chart.png")
+```
+
+There is definitely a peak of cases at the end of 2021 or the start of 2022. Let's tidy the data and change the plot type to a column chart so we can see a clearer picture of the data.
+
+# A better plot
+
+To so there is not so much data included in a plot, let's add some new variables for year and month and group the data by those values to obtain a clearer view of the data.
+
+## Summarise the data
+
+```{r echo=TRUE, eval=TRUE}
+all_areas_df <- df %>%
+	# Add yr, month labels
+	mutate(yr = year(date) %>% as.factor(),
+				 mth = month(date)
+				 ) %>%
+	# Group data
+	group_by(yr, mth) %>%
+	# Calculate total cases
+	summarise(cases = sum(new_cases_by_specimen_date), .groups = "drop")
+```
+
+```{r echo=FALSE}
+# Peek at data
+glimpse(all_areas_df)
+```
+
+## Basic column plot
+
+```{r eval=FALSE, echo=TRUE}
+all_areas_df %>%
+	ggplot(aes(mth, cases)) +
+	geom_col(aes(fill = yr)) +
+	# Facet data to show years and months
+	facet_wrap(~ yr) +
+	# Apply labels to numeric values
+	scale_x_continuous(breaks = 1:12,
+										 labels = c("J", "F", "M", "A", "M", "J", 
+										            "J", "A", "S", "O", "N", "D"),
+										 expand = c(0.01,0))
+```
+
+```{r, layout="l-body-outset", fig.cap="A simple faceted column plot"}
+knitr::include_graphics("all_areas_column.png")
+```
+Our initial analysis of the main peak of cases at the end of 2012 and the start of 2022 was correct, but we can still do better.
+
+## Changing the layout and palette
+
+The standard ggplot2 colour scheme could definitely be better, so lets make a new palette of colours using the `colorspace` package.
+
+```{r eval=TRUE, echo=TRUE}
+# Create colour palette using the burgyl (Burgundy-Yellow) palette
+pal <- colorspace::sequential_hcl(length(unique(all_areas_df$yr)), palette = "burgyl")
+```
+
+Our new layout will plot all the years horizontally across the plot, with a different colour for each year from the `pal` palette created above.
+
+```{r eval=FALSE, echo=TRUE}
+all_areas_df %>%
+	ggplot(aes(mth, cases)) +
+	geom_col(aes(fill = yr)) +
+	# Facet data to show years and months
+	facet_wrap(~ yr) +
+	# Apply labels to numeric values
+	scale_x_continuous(breaks = 1:12,
+										 labels = c("J", "F", "M", "A", "M", "J", 
+										            "J", "A", "S", "O", "N", "D"),
+										 expand = c(0.01,0)) +
+	# Facet data to show years and months
+	facet_wrap(~ yr, nrow = 1, strip.position = "bottom") +
+	# Apply colour palette to columns
+	scale_fill_manual(
+		breaks = unique(all_areas_df$yr),
+		values = pal
+	) +
+	# Expand y axis and format labels
+	scale_y_continuous(labels = label_comma(scale = 1e-6, accuracy = .2, suffix = " m"),
+										 expand = expansion(mult = c(0,.1)))
+```
+
+```{r, layout="l-body-outset", fig.cap="A horizontal facet column plot"}
+knitr::include_graphics("all_areas_column_facet.png")
+```
+
+## Adding labels
+
+We can now add some labels with some descriptive text explaining the chart to the viewer.
+
+```{r echo=TRUE, eval=FALSE}
+# Title
+title_text <- "How many Covid-19 cases submitted each month?"
+
+# Extract items for use in subtitle
+# Sum of all cases
+all_cases <- sum(all_areas_df$cases)
+
+# The year with the max number of cases
+yr_max <- with(all_areas_df, yr[which.max(cases)])
+
+# The month name with the max number of cases
+mth_max <- month.name[with(all_areas_df, mth[which.max(cases)])]
+
+# The actual max number of cases for month
+mth_cases_max <- with(all_areas_df, cases[which.max(cases)])
+
+# Calculate the percent
+mth_cases_pct <- percent(mth_cases_max / all_cases, accuracy = .2)
+
+# Create Subtitle
+subtitle_text <-
+  paste(
+    mth_max,
+    yr_max,
+    "has the highest number of Covid-19 cases in England and Wales, 
+    with a total of",
+    comma(mth_cases_max),
+    "cases. This represents",
+    mth_cases_pct,
+    "of the",
+    comma(all_cases),
+    "cases submitted for the complete period."
+  )
+
+# Create Caption
+caption_text <-
+	"Source: UK Health Security Agency at https://coronavirus.data.gov.uk/"
+```
+
+## Create the final plot
+
+Now we have our labels, let's create the final plot, along with some amendments to the legend and theme.
+
+```{r eval=FALSE, echo=TRUE}
+all_areas_df %>%
+	ggplot(aes(mth, cases)) +
+	geom_col(aes(fill = yr)) +
+	# Add labels
+	labs(
+		title = title_text,
+		subtitle = subtitle_text,
+		caption = caption_text) +
+	# Facet data to show years and months
+	facet_wrap(~ yr, nrow = 1) +
+	# Apply colour palette to columns
+	scale_fill_manual(
+		breaks = unique(all_areas_df$yr),
+		values = pal,
+		guide = guide_legend(
+			title = "Year", title.position = "top",
+			title.theme = element_text(size = 10, 
+			                           family = "roboto-condensed", 
+			                           face = "bold"),
+			label.position = "bottom"
+		)
+	) +
+	# Apply labels to numeric values
+	scale_x_continuous(breaks = 1:12,
+	labels = c("J", "F", "M", "A", "M", "J", 
+	           "J", "A", "S", "O", "N", "D"),
+	expand = c(0.01,0)) +
+	# Expand y axis and format labels
+	scale_y_continuous(labels = label_comma(scale = 1e-6, 
+	                                        accuracy = .2, 
+	                                        suffix = " m"),
+										 expand = expansion(mult = c(0,.1))) +
+	# Amend theme for plot elements
+	theme(
+		# Axis elements
+		axis.line.x = element_line(colour = "grey70"),
+		axis.text.x = element_text(colour = "grey60"),
+		axis.title = element_blank(),
+		# Panel elements
+		panel.grid.major.y = element_line(colour = "grey70", 
+		                                  linewidth = .2, 
+		                                  linetype = "dashed"),
+		panel.spacing = unit(0,'lines'),
+		# Remove Facet strip
+		strip.text = element_blank(),
+		# Legend formatting
+		legend.position = "bottom",
+		legend.direction = "horizontal",
+		legend.justification = "left",
+		legend.key.height = unit(.6, "lines"),
+		legend.key.width = unit(2, "lines"),
+		legend.spacing.x = unit(1, "lines")
+	)
+```
+
+```{r, layout="l-body-outset", fig.cap="The final plot"}
+knitr::include_graphics("all_areas_by_yr_mth.png")
+```
+
+# Conclusion
+
+In the next part, we shall zoom in on the data just for 2023 and a closer look at the data for the area of the UK where I live - North East England.
