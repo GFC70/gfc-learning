@@ -7,16 +7,6 @@ date: 2022-08-14
 output:
   distill::distill_article:
     self_contained: false
-categories:
-  - Welcome
-  - Excel
-  - Power Query
-  - Power Pivot
-  - DAX
-  - VBA
-  - R
-  - Tidyverse
-  - ggplot
 preview: ./logo.jpg
 ---
 

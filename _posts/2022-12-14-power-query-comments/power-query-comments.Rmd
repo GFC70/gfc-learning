@@ -10,7 +10,7 @@ output:
     toc: true
 categories:
   - Excel
-  - POwer Query
+  - Power Query
   - Tips & Tricks
 ---
 
