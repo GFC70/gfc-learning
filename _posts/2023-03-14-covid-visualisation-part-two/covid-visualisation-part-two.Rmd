@@ -44,7 +44,7 @@ font-size: 70%
 
 # Overview
 
-In [part one](https://gfc-learning.netlify.app/posts/2023-03-02-covid-visualisationpart-one/){target="_blank"} we downloaded data from the UK Government's Health Security Agency Covid-19 Dashboard website. 
+In [part one](https://gfc-learning.netlify.app/posts/2023-03-02-covid-visualisationpart-one/) we downloaded data from the UK Government's Health Security Agency Covid-19 Dashboard website. 
 
 # Load Data
 

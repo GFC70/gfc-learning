@@ -118,7 +118,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["all_areas.csv","covid-visualisation-part-two_files/anchor-4.2.2/anchor.min.js","covid-visualisation-part-two_files/bowser-1.9.3/bowser.min.js","covid-visualisation-part-two_files/distill-2.2.21/template.v2.js","covid-visualisation-part-two_files/header-attrs-2.20/header-attrs.js","covid-visualisation-part-two_files/jquery-3.6.0/jquery-3.6.0.js","covid-visualisation-part-two_files/jquery-3.6.0/jquery-3.6.0.min.js","covid-visualisation-part-two_files/jquery-3.6.0/jquery-3.6.0.min.map","covid-visualisation-part-two_files/popper-2.6.0/popper.min.js","covid-visualisation-part-two_files/tippy-6.2.7/tippy-bundle.umd.min.js","covid-visualisation-part-two_files/tippy-6.2.7/tippy-light-border.css","covid-visualisation-part-two_files/tippy-6.2.7/tippy.css","covid-visualisation-part-two_files/tippy-6.2.7/tippy.umd.min.js","covid-visualisation-part-two_files/webcomponents-2.0.0/webcomponents.js","north_east_top_ten_rolling_mean.png","top_ten_rolling_mean.png"]}
+  {"type":"character","attributes":{},"value":["all_areas.csv","covid-visualisation-part-two_files/anchor-4.2.2/anchor.min.js","covid-visualisation-part-two_files/bowser-1.9.3/bowser.min.js","covid-visualisation-part-two_files/distill-2.2.21/template.v2.js","covid-visualisation-part-two_files/header-attrs-2.20/header-attrs.js","covid-visualisation-part-two_files/header-attrs-2.21/header-attrs.js","covid-visualisation-part-two_files/jquery-3.6.0/jquery-3.6.0.js","covid-visualisation-part-two_files/jquery-3.6.0/jquery-3.6.0.min.js","covid-visualisation-part-two_files/jquery-3.6.0/jquery-3.6.0.min.map","covid-visualisation-part-two_files/popper-2.6.0/popper.min.js","covid-visualisation-part-two_files/tippy-6.2.7/tippy-bundle.umd.min.js","covid-visualisation-part-two_files/tippy-6.2.7/tippy-light-border.css","covid-visualisation-part-two_files/tippy-6.2.7/tippy.css","covid-visualisation-part-two_files/tippy-6.2.7/tippy.umd.min.js","covid-visualisation-part-two_files/webcomponents-2.0.0/webcomponents.js","north_east_top_ten_rolling_mean.png","top_ten_rolling_mean.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1475,7 +1475,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="covid-visualisation-part-two_files/header-attrs-2.20/header-attrs.js"></script>
+  <script src="covid-visualisation-part-two_files/header-attrs-2.21/header-attrs.js"></script>
   <script src="covid-visualisation-part-two_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="covid-visualisation-part-two_files/popper-2.6.0/popper.min.js"></script>
   <link href="covid-visualisation-part-two_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1560,7 +1560,7 @@ font-size: 70%
 }
 </style>
 <h1 id="overview">Overview</h1>
-<p>In <a href="https://gfc-learning.netlify.app/posts/2023-03-02-covid-visualisationpart-one/" target="_blank">part one</a> we downloaded data from the UK Government’s Health Security Agency Covid-19 Dashboard website.</p>
+<p>In <a href="https://gfc-learning.netlify.app/posts/2023-03-02-covid-visualisationpart-one/">part one</a> we downloaded data from the UK Government’s Health Security Agency Covid-19 Dashboard website.</p>
 <h1 id="load-data">Load Data</h1>
 <p>The data is now only updated weekly, so a CSV file with the data was saved to remove the need for daily downloads of data.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -1570,15 +1570,15 @@ font-size: 70%
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <pre><code># A tibble: 6 × 5
-  area_code area_name                 date       new_cases_b…¹ country
-  &lt;chr&gt;     &lt;chr&gt;                     &lt;date&gt;             &lt;dbl&gt; &lt;chr&gt;  
-1 E06000003 Redcar and Cleveland      2023-03-08             5 England
-2 E06000014 York                      2023-03-08            14 England
-3 E06000050 Cheshire West and Chester 2023-03-08            18 England
-4 E08000001 Bolton                    2023-03-08             7 England
-5 E08000016 Barnsley                  2023-03-08            14 England
-6 E08000031 Wolverhampton             2023-03-08            12 England
-# … with abbreviated variable name ¹​new_cases_by_specimen_date</code></pre>
+  area_code area_name        date       new_cases_by_specime…¹ country
+  &lt;chr&gt;     &lt;chr&gt;            &lt;date&gt;                      &lt;dbl&gt; &lt;chr&gt;  
+1 E06000003 Redcar and Clev… 2023-04-05                      4 England
+2 E06000014 York             2023-04-05                      6 England
+3 E06000050 Cheshire West a… 2023-04-05                     17 England
+4 E08000001 Bolton           2023-04-05                     10 England
+5 E08000016 Barnsley         2023-04-05                      9 England
+6 E08000031 Wolverhampton    2023-04-05                      5 England
+# ℹ abbreviated name: ¹​new_cases_by_specimen_date</code></pre>
 </div>
 <h1 id="transform-data">Transform Data</h1>
 <h2 id="top-ten-areas">Top Ten Areas</h2>
@@ -1607,16 +1607,16 @@ font-size: 70%
 <pre><code># A tibble: 10 × 2
    area_name       cases
    &lt;chr&gt;           &lt;dbl&gt;
- 1 Hampshire        6150
- 2 Kent             5570
- 3 Essex            5543
- 4 Lancashire       4804
- 5 Hertfordshire    4449
- 6 Surrey           4377
- 7 Norfolk          3777
- 8 Staffordshire    3659
- 9 Devon            3605
-10 Nottinghamshire  3501</code></pre>
+ 1 Hampshire        9681
+ 2 Kent             8364
+ 3 Essex            8124
+ 4 Lancashire       7813
+ 5 Surrey           6777
+ 6 Hertfordshire    6513
+ 7 Staffordshire    5549
+ 8 Norfolk          5375
+ 9 Nottinghamshire  5324
+10 Derbyshire       5173</code></pre>
 </div>
 <h1 id="create-plot">Create Plot</h1>
 <h2 id="create-plot-labels">Create Plot Labels</h2>

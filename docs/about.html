@@ -458,8 +458,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
 
   <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
-  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-6.2.1/css/all.min.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-6.2.1/css/v4-shims.min.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
   <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
   <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
@@ -788,6 +788,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   d-article table.gt_table td,
   d-article table.gt_table th {
     border-bottom: none;
+    font-size: 100%;
   }
 
   .html-widget {
@@ -1860,15 +1861,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
-        if ($(this).children()[0].nodeName == "D-FOOTNOTE") {
-          var fn = $(this).children()[0]
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
           $(this).html(fn.shadowRoot.querySelector("sup"))
           $(this).id = fn.id
           fn.remove()
         }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
-          return "<p>" + $('#ref-' + ref).html() + "</p>";
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
         }).join("\n");
         window.tippy(this, {
           allowHTML: true,
@@ -2381,7 +2388,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     color: var(--hover-color, white);
   }</style>
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.15/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2391,6 +2398,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
+  <script type="text/javascript" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=G-QDXKPJ016F"></script>
+  <script type="text/javascript" cookie-consent="tracking">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QDXKPJ016F');
+  </script>
   <!--/radix_placeholder_site_in_header-->
 
 
@@ -2433,60 +2447,38 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <h2 id="overview">Overview</h2>
-<p>Worked in the IT industry for 24 years with experience in a
-multi-vendor environment in physical and global virtual teams.</p>
-<p>Using MS Office products, most recently the Power Query and Power
-Pivot tools in MS Excel, to produce high quality views and analysis of
-large data sets.</p>
-<p>Recently learning the R programming language to analyse large data
-sets and to produce data visualisations</p>
-<p>Mentoring and coaching colleagues, allowing them to move onto new
-career paths and positions</p>
+<p>Worked in the IT industry for 24 years with experience in a multi-vendor environment in physical and global virtual teams.</p>
+<p>Using MS Office products, most recently the Power Query and Power Pivot tools in MS Excel, to produce high quality views and analysis of large data sets.</p>
+<p>Recently learning the R programming language to analyse large data sets and to produce data visualisations</p>
+<p>Mentoring and coaching colleagues, allowing them to move onto new career paths and positions</p>
 <h2 id="achievements">Achievements</h2>
 <ul>
-<li>Using the R programming language to analysis over 4.5 million rows
-of data to identify blockages in processes</li>
-<li>Providing senior management with both an overview and detailed view
-of outstanding debt</li>
-<li>Reducing a daily six hour task to less than 15 minutes per day by
-automating email creation for new work requests</li>
-<li>Reducing turn around times for client non-standard service requests
-from over 80 days to less than 10 working days</li>
-<li>Self service tool for users to extract data and present in a variety
-of charting formats</li>
-<li>A tool to collate estimated prices for work in a consistent format
-and to supply summarised reports to clients; identifying stale sales
-opportunities worth over $12m</li>
-<li>Management of a global Change Request process to monitor and
-implement changes from project teams and clients</li>
+<li>Using the R programming language to analysis over 4.5 million rows of data to identify blockages in processes</li>
+<li>Providing senior management with both an overview and detailed view of outstanding debt</li>
+<li>Reducing a daily six hour task to less than 15 minutes per day by automating email creation for new work requests</li>
+<li>Reducing turn around times for client non-standard service requests from over 80 days to less than 10 working days</li>
+<li>Self service tool for users to extract data and present in a variety of charting formats</li>
+<li>A tool to collate estimated prices for work in a consistent format and to supply summarised reports to clients; identifying stale sales opportunities worth over $12m</li>
+<li>Management of a global Change Request process to monitor and implement changes from project teams and clients</li>
 </ul>
 <h2 id="testimonials">Testimonials</h2>
 <blockquote>
-<p><i class="fa fa-quote-left" aria-hidden="true"></i> Adept at taking
-user requirements (usually vague verbal/email requests) and responding
-with astutely accurate deliverables. And he delivers quickly to boot
-<i class="fa fa-quote-right" aria-hidden="true"></i> <br />- Former
-Project Manager</p>
+<p><i class="fa fa-quote-left" aria-hidden="true"></i> Adept at taking user requirements (usually vague verbal/email requests) and responding with astutely accurate deliverables.
+And he delivers quickly to boot <i class="fa fa-quote-right" aria-hidden="true"></i> <br />- Former Project Manager</p>
 </blockquote>
 <blockquote>
-<p><i class="fa fa-quote-left" aria-hidden="true"></i> You leave behind
-a legacy you can be proud of and that will have a lasting impact on the
-careers of all who learned from you.
-<i class="fa fa-quote-right" aria-hidden="true"></i><br />- Former Team
-Leader</p>
+<p><i class="fa fa-quote-left" aria-hidden="true"></i> You leave behind a legacy you can be proud of and that will have a lasting impact on the careers of all who learned from you. <i class="fa fa-quote-right" aria-hidden="true"></i><br />- Former Team Leader</p>
 </blockquote>
 <br />
 <center>
-<a href="https://www.linkedin.com/in/grahamcox1970/" target="_blank"><i class="fa fa-linkedin"></i>
-LinkedIn</a>   |  
-<a href="https://github.com/GFC1970" target="_blank"><i class="fab fa-github"></i>
-GitHub</a>
+<a href="https://www.linkedin.com/in/grahamcox1970/" target="_blank"><i class="fa fa-linkedin"></i> LinkedIn</a>
+  |  
+<a href="https://github.com/GFC1970" target="_blank"><i class="fab fa-github"></i> GitHub</a>
 </center>
 <div style="margin-bottom:100px">
 
 </div>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
