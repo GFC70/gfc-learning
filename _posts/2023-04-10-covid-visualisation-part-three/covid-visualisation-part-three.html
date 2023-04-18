@@ -94,8 +94,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2023-03-14"/>
-  <meta property="article:created" itemprop="dateCreated" content="2023-03-14"/>
+  <meta property="article:published" itemprop="datePublished" content="2023-04-11"/>
+  <meta property="article:created" itemprop="dateCreated" content="2023-04-11"/>
   <meta name="article:author" content="Graham Cox"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
@@ -113,7 +113,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","categories","preview"]}},"value":[{"type":"character","attributes":{},"value":["Visualising UK Covid-19 Data - Part 3"]},{"type":"character","attributes":{},"value":["A recent news report suggested that Covid-19 cases in England and Wales are increasing once more. Here we look at data for 2023 and show the data on a UK map \n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Graham Cox"]}]}]},{"type":"character","attributes":{},"value":["2023-03-14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[3]}]}]},{"type":"character","attributes":{},"value":["R","ggplot","Data Analysis","Data Visualisation","Charting","Covid-19"]},{"type":"character","attributes":{},"value":["./uk_map.png"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","categories","preview"]}},"value":[{"type":"character","attributes":{},"value":["Visualising UK Covid-19 Data - Part 3"]},{"type":"character","attributes":{},"value":["A recent news report suggested that Covid-19 cases in England and Wales are increasing once more. Here we look at data for 2023 and show the data on a UK map \n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Graham Cox"]}]}]},{"type":"character","attributes":{},"value":["2023-04-11"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[3]}]}]},{"type":"character","attributes":{},"value":["R","ggplot","Data Analysis","Data Visualisation","Charting","Covid-19"]},{"type":"character","attributes":{},"value":["./uk_map.png"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -1496,7 +1496,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Visualising UK Covid-19 Data - Part 3","description":"A recent news report suggested that Covid-19 cases in England and Wales are increasing once more. Here we look at data for 2023 and show the data on a UK map","authors":[{"author":"Graham Cox","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2023-03-14T00:00:00.000+00:00","citationText":"Cox, 2023"}
+{"title":"Visualising UK Covid-19 Data - Part 3","description":"A recent news report suggested that Covid-19 cases in England and Wales are increasing once more. Here we look at data for 2023 and show the data on a UK map","authors":[{"author":"Graham Cox","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2023-04-11T00:00:00.000+01:00","citationText":"Cox, 2023"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1524,7 +1524,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   
   Graham Cox
   
-<br/>2023-03-14
+<br/>2023-04-11
 </div>
 
 <div class="d-article">
@@ -1579,12 +1579,12 @@ font-size: 70%
 <pre><code># A tibble: 6 × 5
   area_code area_name        date       new_cases_by_specime…¹ country
   &lt;chr&gt;     &lt;chr&gt;            &lt;date&gt;                      &lt;dbl&gt; &lt;chr&gt;  
-1 E06000003 Redcar and Clev… 2023-04-05                      4 England
-2 E06000014 York             2023-04-05                      6 England
-3 E06000050 Cheshire West a… 2023-04-05                     17 England
-4 E08000001 Bolton           2023-04-05                     10 England
-5 E08000016 Barnsley         2023-04-05                      9 England
-6 E08000031 Wolverhampton    2023-04-05                      5 England
+1 E06000003 Redcar and Clev… 2023-04-12                      6 England
+2 E06000014 York             2023-04-12                      3 England
+3 E06000050 Cheshire West a… 2023-04-12                      4 England
+4 E08000001 Bolton           2023-04-12                     10 England
+5 E08000016 Barnsley         2023-04-12                      4 England
+6 E08000031 Wolverhampton    2023-04-12                      4 England
 # ℹ abbreviated name: ¹​new_cases_by_specimen_date</code></pre>
 </div>
 <h1 id="transform-data">Transform Data</h1>
@@ -1614,16 +1614,16 @@ font-size: 70%
 <pre><code># A tibble: 203 × 3
    area_name       cases lbl  
    &lt;chr&gt;           &lt;dbl&gt; &lt;lgl&gt;
- 1 Hampshire        9681 TRUE 
- 2 Kent             8364 TRUE 
- 3 Essex            8124 TRUE 
- 4 Lancashire       7813 TRUE 
- 5 Surrey           6777 TRUE 
- 6 Hertfordshire    6513 FALSE
- 7 Staffordshire    5549 FALSE
- 8 Norfolk          5375 FALSE
- 9 Nottinghamshire  5324 FALSE
-10 Derbyshire       5173 FALSE
+ 1 Hampshire       10105 TRUE 
+ 2 Kent             8691 TRUE 
+ 3 Essex            8425 TRUE 
+ 4 Lancashire       8168 TRUE 
+ 5 Surrey           7109 TRUE 
+ 6 Hertfordshire    6754 FALSE
+ 7 Staffordshire    6221 FALSE
+ 8 Norfolk          5615 FALSE
+ 9 Nottinghamshire  5563 FALSE
+10 Derbyshire       5423 FALSE
 # ℹ 193 more rows</code></pre>
 </div>
 <h1 id="create-plot">Create Plot</h1>
