@@ -13,15 +13,15 @@
       "title": "GFC Learning",
       "author": [],
       "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2023-04-10T08:28:18+01:00"
+      "last_modified": "2023-04-25T17:30:09+01:00"
     },
     {
       "path": "projects.html",
       "title": "Projects",
       "description": "Projects and Learning",
       "author": [],
-      "contents": "\r\nOverview\r\nHere I will post details of data analysis and data visualisation projects i have been working on.\r\nThey will cover a wide range of datasets, and presented in both R and MS Excel.\r\n\r\n\r\n\r\n",
-      "last_modified": "2023-04-10T08:28:19+01:00"
+      "contents": "\r\nData Visualisations of Covid-19 Data\r\nExperimenting various methods of visualising Covid-19 data using ggplot2 in R\r\nPart 1 - Downloading Covid-19 Data\r\nPart 2 - Visualing the Top Ten Areas with the UK\r\nPart 3 - Visualing Covid-19 Data on a map of the UK\r\nPart 4 - Visualising Covid-19 Numbers\r\nNon-Pivot Table Summaries\r\nUsing the new spilled array dynamic functions in MS Excel 365 to present summaries in data using just one formula\r\nPart 1 - Build a basic one cell summary\r\nPart 2 - Using the LET function to build a one cell summary\r\nPart 3 - Using the HSTACK and VSTACK functions to build a one cell summary\r\n\r\n\r\n\r\n",
+      "last_modified": "2023-05-05T18:36:27+01:00"
     }
   ],
   "collections": ["posts/posts.json"]
