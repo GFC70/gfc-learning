@@ -1,5 +1,31 @@
 [
   {
+    "path": "posts/2023-06-19-lambda-between-function/",
+    "title": "Is it between?",
+    "description": "What do you mean, Excel doesn't have a Between function?",
+    "author": [
+      {
+        "name": "Graham Cox",
+        "url": {}
+      }
+    ],
+    "date": "2023-07-04",
+    "categories": [
+      "Excel",
+      "LAMBDA",
+      "BYROW",
+      "MEDIAN",
+      "HSTACK",
+      "VSTACK",
+      "Spilled Arrays",
+      "Tips & Tricks"
+    ],
+    "contents": "\r\n\r\nContents\r\nProblem\r\nTL;DR\r\nSolution\r\nUsing AND\r\nUsing MEDIAN\r\nCreating the LET\r\nCreating the LAMBDA\r\n\r\nAnother Problem\r\nAnother Solution\r\nA Shorter Solution\r\nThe Final Function\r\nDate values?\r\n\r\nProblem\r\nExcel has nearly 500 functions that can be used for a myriad of tasks, but there is still no BETWEEN function.\r\nSure, we can create a simple formula that checks if a number is between two other numbers, but let’s create a custom function that we can call on when needed.\r\nTL;DR\r\nClick here for the final custom function.\r\nSolution\r\nThere are two methods that could be used to check if a number if between another two, the most popular between using the AND method.\r\nUsing AND\r\n\r\n\r\n\r\nFigure 1: Using the AND function\r\n\r\n\r\n\r\nThe formulas in cells F3 and F4 returns if the value in column C is between the lower and upper limits.\r\nUsing MEDIAN\r\nA less well known method would be to use the MEDIAN function. The definition of median when searching in Google is\r\n\r\n“denoting or relating to a value or quantity lying at the midpoint of a frequency distribution of observed values or quantities, such that there is an equal probability of falling above or below it”\r\n\r\nWhen checking if a value is between another two values, using MEDIAN is also a good choice.\r\n\r\n\r\n\r\nFigure 2: Using the MEDIAN function\r\n\r\n\r\n\r\nThe formulas in cells F3 and F4 returns if the value in column C is the median value of the cells in columns C, D and E.\r\nCreating the LET\r\nTo create a custom LAMBDA function, let’s first create the LET formula that will be used within the custom function.\r\n\r\n\r\n\r\nFigure 3: Using the LET function\r\n\r\n\r\n\r\nHere we have created the three variables, ValueToCheck, LowerLimit and UpperLimit that are fed into the Result variable where the actual calculation is performed.\r\nCreating the LAMBDA\r\nNow the LET has been created, the custom function can now be created by moving the three parameters used by the MEDIAN function outside the LET so they can be entered by the user.\r\n\r\n\r\n\r\nFigure 4: Using the LAMBDA function\r\n\r\n\r\n\r\nUsing a LAMBDA custom function with this format with the input cells at the end of the function is not the method to use. Rather the formula is added to the Name Manager and a suitable name is assigned to it.\r\n\r\n\r\n\r\nFigure 5: Using the Name Manager\r\n\r\n\r\n\r\nNow the formula is custom function, it can be called just by entering the name of the function in a cell and adding the relevant cells as parameters.\r\n\r\n\r\n\r\nFigure 6: Using the BETWEEN custom function\r\n\r\n\r\n\r\nAnother Problem\r\nNow we have the custom function, we can use this on multiple ranges and get a result back. However, there is an issue.\r\n\r\n\r\n\r\nFigure 7: Using the BETWEEN custom function across multiple cell ranges\r\n\r\n\r\n\r\nAs shown above, the custom function now returns No for the values in row 3, where the value should be Yes.\r\nAnother Solution\r\nTo ensure we get the correct results when include a range of cells more than one row, we can use the BYROW function to evaluate each row individually.\r\nUsing this function, we can amend the LAMBDA function to create an array of data using the HSTACK function and loop through each row within the array.\r\n\r\n\r\n\r\nFigure 8: Using the BYROW function across multiple rows\r\n\r\n\r\n\r\nA Shorter Solution\r\nNow we have a LAMBDA that works across multiple rows, we can adapt it further to reduce the size of the custom function and refer to the complete range to check into one input parameter\r\n\r\n\r\n\r\nFigure 9: The final LAMBDA function\r\n\r\n\r\n\r\nThe Final Function\r\nThe final function that will be named as our BETWEEN function will be shorter and work across multiple rows by using just one input variable.\r\n\r\n=LAMBDA(Values,\r\nIF(\r\nINDEX(Values,,1)=BYROW(\r\nValues,\r\nLAMBDA(x, MEDIAN((x)))\r\n),\r\n“Yes”,\r\n“No”\r\n)\r\n)\r\n\r\n\r\n\r\n\r\nFigure 10: The BETWEEN function\r\n\r\n\r\n\r\nDate values?\r\nAs Excel stores dates as numbers, the custom function will also work on date values\r\n\r\n\r\n\r\nFigure 11: The BETWEEN function with date values\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+    "preview": "posts/2023-06-19-lambda-between-function/./between-three.png",
+    "last_modified": "2023-07-04T20:34:09+01:00",
+    "input_file": "lambda-between-function.knit.md"
+  },
+  {
     "path": "posts/2023-05-09-excel-dynamic-arrays-tips-tricks-1/",
     "title": "Tips & Tricks for Excel Dynamic Spilled Arrays",
     "description": "The new dynamic spilled arrays and the new Excel calculation engine allow us to do so much more with data now. Here are some tips and tricks I have learnt over the past few months",
